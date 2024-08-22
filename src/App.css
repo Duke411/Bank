@@ -1,0 +1,137 @@
+.bg-image {
+  position: relative;
+  width: inherit;
+  /* height: 70vh; */
+  background-image: url("./assets/BackgroundImage.jpg");
+  background-position: center;
+  background-size: cover;
+}
+.bg-image::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  height: inherit;
+  width: inherit;
+  background: linear-gradient(
+    to right,
+    #323642 75%,
+    rgba(0, 0, 255, 0.078) 15%
+  );
+}
+.text {
+  position: relative;
+  z-index: 1;
+  color: white;
+}
+
+.bg-slate-800 img {
+  width: 200px;
+}
+
+.debit {
+  background: linear-gradient(rgb(41, 58, 72), #090a0c);
+}
+.explore {
+  background-color: #efede7;
+  padding-bottom: 20rem;
+}
+
+.article img {
+  height: 14rem;
+}
+.articleWidth {
+  width: 30%;
+}
+.thirdImage {
+  background-image: url("./assets/ThirdbgImage.jpg");
+  background-position: center;
+  background-size: cover;
+}
+.iconContainer article {
+  width: 30%;
+  padding: 2rem;
+  display: block;
+  align-items: center;
+  justify-items: center;
+}
+.testify {
+  background-color: #efede7;
+}
+.sectionBack {
+  background-color: #efede7;
+}
+.appIcon img {
+  width: 100px;
+  margin-left: 5px;
+}
+.foot {
+  width: 100%;
+  /* height: 60vh; */
+  background: linear-gradient(to right, #2f323d, #494e5e);
+  padding-top: 3rem;
+  color: white;
+}
+
+.navlink {
+  position: fixed;
+  top: 8.5%;
+  bottom: 0;
+  left: 100vw;
+  height: 100%;
+  z-index: 10;
+  color: white;
+  transition-behavior: normal;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+  transition-delay: 0s;
+  opacity: 0;
+}
+
+.show {
+  opacity: 1;
+  left: 0;
+  visibility: visible;
+}
+.bord {
+  border-right: 1px solid black;
+}
+.bordLeft {
+  border-left: 1px solid black;
+}
+.login {
+  width: 100%;
+  background-color: #2f323d;
+  height: 100vh;
+}
+/* .form form {
+  height: 20rem;
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  transform: translateY(-50%, -50%);
+} */
+.form1 {
+  background-color: #efede7;
+}
+.frist {
+  background: linear-gradient(rgb(41, 58, 72), #090a0c);
+}
+
+.contact_first {
+  background-color: #9699a2;
+}
+.atm {
+  background-image: url("../src/assets/atm.jpg");
+  height: 10rem;
+  border-radius: 10px;
+}
+.atm2 {
+  background-color: rgb(47, 121, 144);
+  height: 10rem;
+  border-radius: 10px;
+}
+.atm h1 {
+  font-style: italic;
+}
