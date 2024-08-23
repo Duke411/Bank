@@ -1,17 +1,16 @@
-// import React from 'react'
 import "../../App.css";
+import { Link } from "react-router-dom";
 import { FaBell, FaUser, FaHome, FaCcMastercard } from "react-icons/fa";
-import { IoIosSettings, IoMdHelpCircleOutline } from "react-icons/io";
-import { IoLogOutOutline, IoAlertCircleOutline } from "react-icons/io5";
-import { MdOutlineSavings, MdAccountBalanceWallet } from "react-icons/md";
-import { LuBanknote } from "react-icons/lu";
-import { GoGraph } from "react-icons/go";
+import { IoIosSettings } from "react-icons/io";
+import { IoLogOutOutline } from "react-icons/io5";
+import { MdAccountBalanceWallet } from "react-icons/md";
 import { GrTransaction } from "react-icons/gr";
 import { FaMessage } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { FaSackDollar } from "react-icons/fa6";
 import Chart from "../../Components/Chart";
 import Transaction from "../../Components/Transaction";
+import { FaBitcoin } from "react-icons/fa6";
 
 const BankDashboard = () => {
   return (
@@ -20,43 +19,44 @@ const BankDashboard = () => {
         <aside className="hidden md:block md:w-1/4 bg-slate-800 pb-14 shadow-md p-5">
           <label className="text-2xl text-yellow-600 font-bold">Bank</label>
           <ul className="text-white font-semibold mt-10">
-            <li className="flex hover:bg-yellow-600 hover:text-black p-2">
-              <FaHome /> <span className="ml-3">Home</span>
-            </li>
-            <li className="flex hover:bg-yellow-600 hover:text-black p-2">
-              <MdAccountBalanceWallet /> <span className="ml-3">Accounts</span>
-            </li>
-            <li className="flex hover:bg-yellow-600 hover:text-black p-2">
+            <Link
+              className="flex hover:bg-yellow-600 hover:text-black p-2 active"
+              to="/bankdashboard"
+            >
+              <FaHome /> <span className="ml-3 ">Home</span>
+            </Link>
+            <Link
+              className="flex hover:bg-yellow-600 hover:text-black p-2"
+              to="/products"
+            >
+              <MdAccountBalanceWallet /> <span className="ml-3">Products</span>
+            </Link>
+            <Link
+              className="flex hover:bg-yellow-600 hover:text-black p-2"
+              to="/transactions"
+            >
               <GrTransaction /> <span className="ml-3">Transactions</span>
-            </li>
-            <li className="flex hover:bg-yellow-600 hover:text-black p-2">
-              <FaHome /> <span className="ml-3">Transfers</span>
-            </li>
-            <li className="flex hover:bg-yellow-600 hover:text-black p-2">
+            </Link>
+
+            <Link
+              className="flex hover:bg-yellow-600 hover:text-black p-2"
+              to="/payments"
+            >
               <FaHome /> <span className="ml-3">Payments</span>
-            </li>
-            <li className="flex hover:bg-yellow-600 hover:text-black p-2">
+            </Link>
+            <Link
+              className="flex hover:bg-yellow-600 hover:text-black p-2"
+              to="/cards"
+            >
               <FaCcMastercard /> <span className="ml-3">Cards</span>
-            </li>
-            <li className="flex hover:bg-yellow-600 hover:text-black p-2">
-              <LuBanknote /> <span className="ml-3">Loans</span>
-            </li>
-            <li className="flex hover:bg-yellow-600 hover:text-black p-2">
-              <GoGraph /> <span className="ml-3">Investments</span>
-            </li>
-            <li className="flex hover:bg-yellow-600 hover:text-black p-2">
-              <MdOutlineSavings /> <span className="ml-3">Savings</span>
-            </li>
-            <li className="flex hover:bg-yellow-600 hover:text-black p-2">
-              <IoAlertCircleOutline /> <span className="ml-3">Alerts</span>
-            </li>
-            <li className="flex hover:bg-yellow-600 hover:text-black p-2">
-              <IoMdHelpCircleOutline />{" "}
-              <span className="ml-3">Help Center</span>
-            </li>
-            <li className="flex hover:bg-yellow-600 hover:text-black p-2">
+            </Link>
+
+            <Link
+              className="flex hover:bg-yellow-600 hover:text-black p-2"
+              to="/settings"
+            >
               <IoIosSettings /> <span className="ml-3">Settings</span>
-            </li>
+            </Link>
             <li className="flex hover:bg-yellow-600 hover:text-black p-2">
               <IoLogOutOutline /> <span className="ml-3">Logout</span>
             </li>
@@ -77,6 +77,11 @@ const BankDashboard = () => {
             </div>
           </nav>
           <section className="section w-full">
+            <div className="ml-3">
+              <h1 className="font-bold text-black">
+                Account Number <span>123****5342</span>
+              </h1>
+            </div>
             <div className="md:flex block md:w- container">
               <div>
                 <div className="md:flex justify-between block md:p-none p-2 ">
@@ -97,11 +102,11 @@ const BankDashboard = () => {
                   </div>
                 </div>
                 <h3 className="m-2 font-bold">Finances</h3>
-                <div className="w-full bg-white">
+                <div className="w-full bg-white shadow-md rounded-md">
                   <Chart />
                 </div>
                 <h3 className="m-2 font-semibold">Transaction History</h3>
-                <div className="w-full bg-white">
+                <div className="w-full bg-white shadow-lg rounded-md">
                   <Transaction />
                 </div>
               </div>
@@ -116,6 +121,17 @@ const BankDashboard = () => {
                 <div className="atm2 w-full absolute top-8 z-10 left-7"></div>
                 <div className="mt-8 ml-2 font-bold">
                   <h3>Quick Transactions</h3>
+                  <button className="bg-slate-800 rounded-lg text-white font-semibold shadow-lg p-4">
+                    Transfer
+                  </button>
+                  <div className="mt-5">
+                    <FaBitcoin size={50} color="orange" />
+                    <h1>
+                      Interested In Crypto Banking?, Click the link below for
+                      more information.
+                    </h1>
+                    <button className="click">Click - Me</button>
+                  </div>
                 </div>
               </div>
             </div>

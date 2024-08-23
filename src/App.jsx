@@ -11,6 +11,11 @@ import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import Location from "./Pages/Location";
 import BankDashboard from "./Pages/Dashboard/BankDashboard";
+import Accounts from "./Pages/Dashboard/Accounts";
+import Transactions from "./Pages/Dashboard/Transactions";
+import Payments from "./Pages/Dashboard/Payments";
+import Cards from "./Pages/Dashboard/Cards";
+import Settings from "./Pages/Dashboard/Settings";
 
 const App = () => {
   useEffect(() => {
@@ -31,7 +36,12 @@ const App = () => {
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
           <Route path="location" element={<Location />} />
-          <Route path="user" element={<BankDashboard />} />
+          <Route path="bankdashboard" element={<BankDashboard />} />
+          <Route path="products" element={<Accounts />} />
+          <Route path="transactions" element={<Transactions />} />
+          <Route path="payments" element={<Payments />} />
+          <Route path="cards" element={<Cards />} />
+          <Route path="settings" element={<Settings />} />
         </Routes>
       </BrowserRouter>
     </React.Fragment>
