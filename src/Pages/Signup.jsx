@@ -199,6 +199,21 @@ const Signup = () => {
                   className="form-input w-full border rounded-lg p-2"
                 />
               </div>
+              <div className="form-group">
+                <label
+                  className="block text-sm font-bold mb-2"
+                  htmlFor="zipCode"
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="123456"
+                  name="passowrd"
+                  placeholder="Enter Zip Code"
+                  className="form-input w-full border rounded-lg p-2"
+                />
+              </div>
             </div>
             <div className="mt-6">
               <h4 className="text-lg font-semibold mb-2">

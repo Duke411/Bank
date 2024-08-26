@@ -1,6 +1,6 @@
-import React from "react";
+// import React from "react";
 import { Bar } from "react-chartjs-2";
-import { FaCopy } from "react-icons/fa";
+// import { FaCopy } from "react-icons/fa";
 import {
   Chart as ChartJS,
   CategoryScale,
