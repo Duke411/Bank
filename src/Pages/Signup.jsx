@@ -210,7 +210,22 @@ const Signup = () => {
                   type="password"
                   id="123456"
                   name="passowrd"
-                  placeholder="Enter Zip Code"
+                  placeholder="Set Password"
+                  className="form-input w-full border rounded-lg p-2"
+                />
+              </div>
+              <div className="form-group">
+                <label
+                  className="block text-sm font-bold mb-2"
+                  htmlFor="confirm"
+                >
+                  Confirm-Password
+                </label>
+                <input
+                  type="confirm"
+                  id="123456"
+                  name="confirm"
+                  placeholder="confirm password"
                   className="form-input w-full border rounded-lg p-2"
                 />
               </div>
