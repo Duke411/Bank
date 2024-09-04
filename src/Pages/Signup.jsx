@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
 import { FaGreaterThan } from "react-icons/fa6";
 import Navbar from "../Components/Navbar";
@@ -7,6 +7,46 @@ import { MdPersonOutline } from "react-icons/md";
 import { FaFingerprint } from "react-icons/fa";
 import { RiRefund2Fill } from "react-icons/ri";
 import Footer from "../Components/Footer";
+import { useFormik } from "formik";
+import axios from "axios";
+
+const validate = (values) => {
+  const errors = {};
+  if (!values.firstName) {
+    errors.firstName = "!firstname is Required";
+  } else if (values.firstName.length > 15) {
+    errors.firstName = "Must be 15 characters or less";
+  }
+  if (!values.lastName) {
+    errors.lastName = "!lastname is Required";
+  } else if (values.lastName.length > 15) {
+    errors.lastName = "Must be 15 characters or less";
+  }
+
+  if (!values.email) {
+    errors.email = "!Email is Required";
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = "Invalid email address";
+  }
+
+  if (!values.password) {
+    errors.password = "!Password is Required";
+  } else if (values.password.length > 20) {
+    errors.password = "Must be 20 characters or less";
+  }
+  if (!values.confirmpassword) {
+    errors.confirmpassword = "!Confirm Password is Required";
+  } else if (values.confirmpassword.length > 20) {
+    errors.confirmpassword = "Must be same with password";
+  }
+  if (!values.phonenumber) {
+    errors.phonenumber = "!phonenumber  is Required";
+  } else if (values.phonenumber.length > 12) {
+    errors.phonenumber = "Must not be more than 11 digits";
+  }
+
+  return errors;
+};
 
 const Signup = () => {
   const [accounts, setAccounts] = useState([
@@ -37,6 +77,37 @@ const Signup = () => {
   ]);
   const paragraphText = `Opening your account is quick, easy and secure.`;
   const started = `Let's get started.`;
+
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      password: "",
+      phonenumber: "",
+      email: "",
+      confirmpassword: "",
+    },
+    validate,
+    onSubmit: (values, { resetForm }) => {
+      axios
+        .post("http://localhost:8080/bank/api/v1/signup", {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          password: values.password,
+          phonenumber: values.phonenumber,
+          email: values.email,
+          confirmpassword: values.confirmpassword,
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      resetForm(values, "");
+    },
+  });
+
   return (
     <React.Fragment>
       <Navbar />
@@ -91,172 +162,220 @@ const Signup = () => {
             <h4 className="text-lg font-bold mb-4">
               Tell us a little about yourself.
             </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="form-group">
-                <label
-                  className="block text-sm font-semibold mb-2"
-                  htmlFor="firstName"
-                >
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  id="firstName"
-                  name="firstName"
-                  placeholder="Enter First Name"
-                  className="form-input w-full border rounded-lg p-2"
-                />
-              </div>
-              <div className="form-group">
-                <label
-                  className="block text-sm font-medium mb-2"
-                  htmlFor="middleName"
-                >
-                  Middle Name <span className="text-gray-500">Optional</span>
-                </label>
-                <input
-                  type="text"
-                  id="middleName"
-                  name="middleName"
-                  placeholder="Enter Middle Name"
-                  className="form-input w-full border rounded-lg p-2"
-                />
-              </div>
-              <div className="form-group">
-                <label
-                  className="block text-sm font-medium mb-2"
-                  htmlFor="lastName"
-                >
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  placeholder="Enter Last Name"
-                  className="form-input w-full border rounded-lg p-2"
-                />
-              </div>
-              <div className="form-group">
-                <label className="block text-sm font-medium mb-2" htmlFor="dob">
-                  Date of Birth
-                </label>
-                <input
-                  type="text"
-                  id="dob"
-                  name="dob"
-                  placeholder="MM/DD/YYYY"
-                  className="form-input w-full border rounded-lg p-2"
-                />
-              </div>
-              <div className="form-group">
-                <label
-                  className="block text-sm font-medium mb-2"
-                  htmlFor="email"
-                >
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Enter Email Address"
-                  className="form-input w-full border rounded-lg p-2"
-                />
-              </div>
-              <div className="form-group relative">
-                <label
-                  className="block text-sm font-medium mb-2"
-                  htmlFor="primaryPhoneNumber"
-                >
-                  Primary Phone Number
-                </label>
-                <div className="flex">
-                  <span className="input-prefix-box bg-gray-200 px-4 flex items-center border rounded-l-lg">
-                    +1
-                  </span>
+            <form onSubmit={formik.handleSubmit}>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="form-group">
+                  <label
+                    className="block text-sm font-semibold mb-2"
+                    htmlFor="firstName"
+                  >
+                    First Name
+                  </label>
                   <input
                     type="text"
-                    id="primaryPhoneNumber"
-                    name="primaryPhoneNumber"
-                    placeholder="Enter Primary Phone Number"
-                    className="form-input w-full border rounded-r-lg p-2"
+                    id="firstName"
+                    name="firstName"
+                    placeholder="Enter First Name"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.firstName}
+                    className="form-input w-full border rounded-lg p-2"
                   />
                 </div>
+                {formik.errors.firstName ? (
+                  <div style={{ color: "red" }}>{formik.errors.firstName}</div>
+                ) : null}
+                <div className="form-group">
+                  <label
+                    className="block text-sm font-medium mb-2"
+                    htmlFor="middleName"
+                  >
+                    Middle Name <span className="text-gray-500">Optional</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="middleName"
+                    name="middleName"
+                    placeholder="Enter Middle Name"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.middleName}
+                    className="form-input w-full border rounded-lg p-2"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label
+                    className="block text-sm font-medium mb-2"
+                    htmlFor="lastName"
+                  >
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.lastName}
+                    placeholder="Enter Last Name"
+                    className="form-input w-full border rounded-lg p-2"
+                  />
+                </div>
+                {formik.errors.lastName ? (
+                  <div style={{ color: "red" }}>{formik.errors.lastName}</div>
+                ) : null}
+                <div className="form-group">
+                  <label
+                    className="block text-sm font-medium mb-2"
+                    htmlFor="dob"
+                  >
+                    Date of Birth
+                  </label>
+                  <input
+                    type="text"
+                    id="dob"
+                    name="dob"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.dob}
+                    placeholder="MM/DD/YYYY"
+                    className="form-input w-full border rounded-lg p-2"
+                  />
+                </div>
+                <div className="form-group">
+                  <label
+                    className="block text-sm font-medium mb-2"
+                    htmlFor="email"
+                  >
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.email}
+                    placeholder="Enter Email Address"
+                    className="form-input w-full border rounded-lg p-2"
+                  />
+                </div>
+                {formik.errors.email ? (
+                  <div style={{ color: "red" }}>{formik.errors.email}</div>
+                ) : null}
+                <div className="form-group relative">
+                  <label
+                    className="block text-sm font-medium mb-2"
+                    htmlFor="primaryPhoneNumber"
+                  >
+                    Primary Phone Number
+                  </label>
+                  <div className="flex">
+                    <span className="input-prefix-box bg-gray-200 px-4 flex items-center border rounded-l-lg">
+                      +1
+                    </span>
+                    <input
+                      type="number"
+                      id="primaryPhoneNumber"
+                      name="phonenumber"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.phonenumber}
+                      placeholder="Enter Primary Phone Number"
+                      className="form-input w-full border rounded-r-lg p-2"
+                    />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label
+                    className="block text-sm font-bold mb-2"
+                    htmlFor="zipCode"
+                  >
+                    Zip Code
+                  </label>
+                  <input
+                    type="text"
+                    id="zipCode"
+                    name="zipCode"
+                    placeholder="Enter Zip Code"
+                    className="form-input w-full border rounded-lg p-2"
+                  />
+                </div>
+                <div className="form-group">
+                  <label
+                    className="block text-sm font-bold mb-2"
+                    htmlFor="zipCode"
+                  >
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    id="123456"
+                    name="password"
+                    placeholder="Set Password"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.password}
+                    className="form-input w-full border rounded-lg p-2"
+                  />
+                </div>
+                {formik.errors.password ? (
+                  <div style={{ color: "red" }}>{formik.errors.password}</div>
+                ) : null}
+                <div className="form-group">
+                  <label
+                    className="block text-sm font-bold mb-2"
+                    htmlFor="confirm"
+                  >
+                    Confirm-Password
+                  </label>
+                  <input
+                    type="password"
+                    id="123456"
+                    name="confirmpassword"
+                    placeholder="confirm password"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.confirmpassword}
+                    className="form-input w-full border rounded-lg p-2"
+                  />
+                </div>
+                {formik.errors.password ? (
+                  <div style={{ color: "red" }}>{formik.errors.password}</div>
+                ) : null}
               </div>
-              <div className="form-group">
-                <label
-                  className="block text-sm font-bold mb-2"
-                  htmlFor="zipCode"
+              <div className="mt-6">
+                <h4 className="text-lg font-semibold mb-2">
+                  Read the: Electronic Disclosure Agreement
+                </h4>
+                <p className="text-sm mb-4">
+                  This disclosure documents your consent to conduct transactions
+                  electronically...
+                </p>
+                <div className="form-group flex items-start">
+                  <input
+                    type="checkbox"
+                    id="disclosure"
+                    name="disclosure"
+                    className="mt-1 mr-2"
+                  />
+                  <label htmlFor="disclosure" className="text-sm font-semibold">
+                    I have read the Electronic Disclosure Agreement and agree to
+                    conduct business in accordance with the terms and conditions
+                    contained therein
+                  </label>
+                </div>
+              </div>
+              <div className="mt-6 text-right">
+                <button
+                  type="submit"
+                  className="bg-yellow-500 text-black px-4 py-2 rounded-lg font-semibold"
                 >
-                  Zip Code
-                </label>
-                <input
-                  type="text"
-                  id="zipCode"
-                  name="zipCode"
-                  placeholder="Enter Zip Code"
-                  className="form-input w-full border rounded-lg p-2"
-                />
+                  Continue
+                </button>
               </div>
-              <div className="form-group">
-                <label
-                  className="block text-sm font-bold mb-2"
-                  htmlFor="zipCode"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="123456"
-                  name="passowrd"
-                  placeholder="Set Password"
-                  className="form-input w-full border rounded-lg p-2"
-                />
-              </div>
-              <div className="form-group">
-                <label
-                  className="block text-sm font-bold mb-2"
-                  htmlFor="confirm"
-                >
-                  Confirm-Password
-                </label>
-                <input
-                  type="confirm"
-                  id="123456"
-                  name="confirm"
-                  placeholder="confirm password"
-                  className="form-input w-full border rounded-lg p-2"
-                />
-              </div>
-            </div>
-            <div className="mt-6">
-              <h4 className="text-lg font-semibold mb-2">
-                Read the: Electronic Disclosure Agreement
-              </h4>
-              <p className="text-sm mb-4">
-                This disclosure documents your consent to conduct transactions
-                electronically...
-              </p>
-              <div className="form-group flex items-start">
-                <input
-                  type="checkbox"
-                  id="disclosure"
-                  name="disclosure"
-                  className="mt-1 mr-2"
-                />
-                <label htmlFor="disclosure" className="text-sm font-semibold">
-                  I have read the Electronic Disclosure Agreement and agree to
-                  conduct business in accordance with the terms and conditions
-                  contained therein
-                </label>
-              </div>
-            </div>
-            <div className="mt-6 text-right">
-              <button className="bg-yellow-500 text-black px-4 py-2 rounded-lg font-semibold">
-                Continue
-              </button>
-            </div>
+            </form>
           </div>
         </div>
       </section>
