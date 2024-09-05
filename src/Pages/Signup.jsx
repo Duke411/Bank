@@ -332,7 +332,7 @@ const Signup = () => {
                   </label>
                   <input
                     type="password"
-                    id="123456"
+                    id="1234567"
                     name="confirmpassword"
                     placeholder="confirm password"
                     onChange={formik.handleChange}

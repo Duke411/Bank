@@ -1,5 +1,4 @@
-// import React from 'react'
-// import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../App.css";
 import axios from "axios";
@@ -22,8 +21,7 @@ const validate = (values) => {
 };
 
 const Form = () => {
-  // const [Email, setEmail] = useState("");
-  // const [Password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -31,18 +29,15 @@ const Form = () => {
       password: "",
     },
     validate,
-    onSubmit: (values, { resetForm }) => {
-      axios
-        .post("http://localhost:8080/bank/api/v1/login", {
-          email: values.email,
-          password: values.password,
-        })
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    onSubmit: async (values, { resetForm }) => {
+      const res = await axios.post("http://localhost:8080/bank/api/v1/login", {
+        email: values.email,
+        password: values.password,
+      });
+      if (res.data.role === "user") {
+        navigate("/bankdashboard");
+      }
+
       resetForm(values, "");
     },
   });
