@@ -11,9 +11,12 @@ const FristAbout = () => {
               Get to Know Us
             </h1>
             <p className="mt-2 mb-5 text-white font-semibold sm:text-2xl">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
-              delectus in asperiores neque autem, vero ratione dolores maxime ad
-              corporis.
+              At Equity, we believe that understanding your financial partner is
+              key to building a strong and lasting relationship. Our commitment
+              is to provide you with personalized services that align with your
+              unique financial goals. Whether you’re saving for the future,
+              managing your day-to-day finances, or planning for a big
+              investment, we’re here to support you every step of the way.
             </p>
           </div>
           <div className="w-full sm:w-1/2">

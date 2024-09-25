@@ -8,13 +8,13 @@ const articleImages = [
     header: `Click the “Let’s Chat!” button to talk with a live representative.`,
   },
   {
-    header: `call: 1 (888) 733-5041
+    header: `call: +12027920117
 
 Monday-Friday: 8AM-6PM
 Saturday: 7:30AM-12:30PM`,
   },
   {
-    header: `Bank Telephone: 1 (800) 856-5807`,
+    header: `Bank Telephone: +12027920117`,
   },
 ];
 

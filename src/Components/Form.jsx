@@ -1,8 +1,10 @@
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
-import axios from "axios";
 import { useFormik } from "formik";
+import axios from "axios";
+import { toast } from "react-toastify";
+import AuthContext from "../store/auth-context";
 
 const validate = (values) => {
   const errors = {};
@@ -21,7 +23,10 @@ const validate = (values) => {
 };
 
 const Form = () => {
+  const authCntxt = useContext(AuthContext);
   const navigate = useNavigate();
+
+  // const [formData, setFormData] = useState(null);
 
   const formik = useFormik({
     initialValues: {
@@ -30,15 +35,38 @@ const Form = () => {
     },
     validate,
     onSubmit: async (values, { resetForm }) => {
-      const res = await axios.post("http://localhost:8080/bank/api/v1/login", {
-        email: values.email,
-        password: values.password,
-      });
-      if (res.data.role === "user") {
-        navigate("/bankdashboard");
-      }
+      try {
+        const res = await axios.post(
+          "https://equity-bqnkapp.onrender.com/bank/api/v1/login",
+          {
+            password: values.password,
+            email: values.email,
+          },
+          { withCredentials: true }
+        );
+        authCntxt.login(res.data.token, res.data.data.user);
 
-      resetForm(values, "");
+        // setUser(res.data.data.user);
+        if (res.data.status === "success") {
+          const userRole = res.data.data.user.role;
+          if (userRole === "admin") {
+            navigate("/admin");
+          } else {
+            navigate("/bankdashboard");
+          }
+        }
+        toast.success("LogIn Successfull");
+
+        // console.log(res);
+        // console.log(res.data.data.token);
+        // toast.success("LogIn Successfull");
+        // authCxt.logIn(res.data.data.token);
+        // navigate("/bankdashboard");
+      } catch (error) {
+        error ? toast.error("Invalid Email or Password") : error;
+      } finally {
+        resetForm();
+      }
     },
   });
 

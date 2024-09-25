@@ -150,3 +150,10 @@
   padding: 3px 7px;
   box-shadow: 0px 15px 10px rgba(0, 0, 0, 0.1%);
 }
+.adminDashboard {
+  height: 100vh;
+}
+
+.fullHeight {
+  height: 100%;
+}

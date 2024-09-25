@@ -27,9 +27,9 @@ const Cards = () => {
             >
               <MdAccountBalanceWallet /> <span className="ml-3">Products</span>
             </Link>
-            <Link className="flex hover:bg-yellow-600 hover:text-black p-2 ">
+            {/* <Link className="flex hover:bg-yellow-600 hover:text-black p-2 ">
               <GrTransaction /> <span className="ml-3">Transactions</span>
-            </Link>
+            </Link> */}
 
             <Link
               to="/payments"
@@ -37,15 +37,15 @@ const Cards = () => {
             >
               <FaHome /> <span className="ml-3">Payments</span>
             </Link>
-            <Link className="flex hover:bg-yellow-600 hover:text-black p-2 active">
+            {/* <Link className="flex hover:bg-yellow-600 hover:text-black p-2 active">
               <FaCcMastercard /> <span className="ml-3">Cards</span>
-            </Link>
+            </Link> */}
 
             <Link
               to="/settings"
               className="flex hover:bg-yellow-600 hover:text-black p-2"
             >
-              <IoIosSettings /> <span className="ml-3">Settings</span>
+              <IoIosSettings /> <span className="ml-3">Account Dettails</span>
             </Link>
             <Link className="flex hover:bg-yellow-600 hover:text-black p-2">
               <IoLogOutOutline /> <span className="ml-3">Logout</span>

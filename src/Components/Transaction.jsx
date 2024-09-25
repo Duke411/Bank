@@ -1,6 +1,6 @@
 // import React from 'react';
 
-const Transaction = () => {
+const Transaction = ({ transactions }) => {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-left border-collapse">

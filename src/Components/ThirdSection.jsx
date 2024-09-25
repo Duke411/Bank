@@ -1,6 +1,7 @@
 import React from "react";
 import "../App.css";
 import { FaGreaterThan } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const paragraphText = `Spend, save, borrow, invest and protect your money with Equity Bank. 
 Our personal banking services help set you up for success.`;
@@ -38,12 +39,14 @@ const ThirdSection = () => {
             <p className="mt-5 text-white text-xl sm:text-2xl">
               {paragraphText}
             </p>
-            <button className="mt-5 p-2 bg-yellow-600 text-black font-semibold shadow-md flex items-center justify-center text-base sm:text-lg">
-              {btntext}{" "}
-              <span className="pt-1 ml-2">
-                <FaGreaterThan />
-              </span>
-            </button>
+            <Link to="/signup">
+              <button className="mt-5 p-2 bg-yellow-600 text-black font-semibold shadow-md flex items-center justify-center text-base sm:text-lg">
+                {btntext}{" "}
+                <span className="pt-1 ml-2">
+                  <FaGreaterThan />
+                </span>
+              </button>
+            </Link>
           </div>
           <div className="w-full sm:w-1/2 mt-8 sm:mt-0 p-4">
             {accounts.map((item, index) => {
@@ -56,7 +59,9 @@ const ThirdSection = () => {
                     {item}
                   </span>
                   <span className="w-1/4 sm:w-1/4 bg-black p-4 flex items-center justify-center">
-                    <FaGreaterThan color="yellow" size={20} />
+                    <Link to="/login">
+                      <FaGreaterThan color="yellow" size={20} />{" "}
+                    </Link>
                   </span>
                 </div>
               );

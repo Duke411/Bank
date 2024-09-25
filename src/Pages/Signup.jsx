@@ -9,6 +9,8 @@ import { RiRefund2Fill } from "react-icons/ri";
 import Footer from "../Components/Footer";
 import { useFormik } from "formik";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const validate = (values) => {
   const errors = {};
@@ -45,6 +47,21 @@ const validate = (values) => {
     errors.phonenumber = "Must not be more than 11 digits";
   }
 
+  if (!values.residentialAddress) {
+    errors.residentialAddress = "residential Address is required";
+  }
+  if (!values.city) {
+    errors.city = "city is required";
+  }
+  if (!values.state) {
+    errors.state = "state is required";
+  }
+  if (!values.country) {
+    errors.country = "country is required";
+  }
+  if (!values.typeofIdentification) {
+    errors.typeofIdentification = " type Of Identification is required";
+  }
   return errors;
 };
 
@@ -78,6 +95,8 @@ const Signup = () => {
   const paragraphText = `Opening your account is quick, easy and secure.`;
   const started = `Let's get started.`;
 
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -86,27 +105,69 @@ const Signup = () => {
       phonenumber: "",
       email: "",
       confirmpassword: "",
+      file: "",
+      residentialAddress: "",
+      city: "",
+      dateOfBirth: "",
+      state: "",
+      gender: "",
+      country: "",
+      typeofIdentification: "",
+      identificationNumber: "",
+      accountType: "",
+      occupation: "",
+      accountbalance: "",
     },
     validate,
-    onSubmit: (values, { resetForm }) => {
-      axios
-        .post("http://localhost:8080/bank/api/v1/signup", {
-          firstName: values.firstName,
-          lastName: values.lastName,
-          password: values.password,
-          phonenumber: values.phonenumber,
-          email: values.email,
-          confirmpassword: values.confirmpassword,
-        })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    onSubmit: async (values, { resetForm }) => {
+      const formData = new FormData();
+      formData.append("firstName", values.firstName);
+      formData.append("lastName", values.lastName);
+      formData.append("password", values.password);
+      formData.append("phonenumber", values.phonenumber);
+      formData.append("email", values.email);
+      formData.append("confirmpassword", values.confirmpassword);
+      formData.append("residentialAddress", values.residentialAddress);
+      formData.append("city", values.city);
+      formData.append("dateOfBirth", values.dateOfBirth);
+      formData.append("state", values.state);
+      formData.append("gender", values.gender);
+      formData.append("country", values.country);
+      formData.append("typeofIdentification", values.typeofIdentification);
+      formData.append("identificationNumber", values.identificationNumber);
+      formData.append("accountType", values.accountType);
+      formData.append("occupation", values.occupation);
+      formData.append("accountbalance", values.accountbalance);
+      if (values.file) {
+        formData.append("file", values.file);
+      }
+
+      try {
+        const res = await axios.post(
+          "https://equity-bqnkapp.onrender.com/bank/api/v1/signup",
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+            withCredentials: true,
+          }
+        );
+
+        console.log(res);
+        toast.success("Sign Up Successfull");
+        navigate("/login");
+      } catch (error) {
+        error ? toast.error("Duplicate Information") : error;
+      }
+      //..
+
       resetForm(values, "");
     },
   });
+
+  const handleFileChange = (event) => {
+    const file = event.currentTarget.files[0];
+    formik.setFieldValue("file", file);
+  };
 
   return (
     <React.Fragment>
@@ -127,12 +188,6 @@ const Signup = () => {
             <p className="mt-5 text-white text-xl sm:text-2xl">
               {paragraphText}
             </p>
-            {/* <button className="mt-5 p-2 bg-yellow-600 text-black font-semibold shadow-md flex items-center justify-center text-base sm:text-lg">
-              {btntext}{" "}
-              <span className="pt-1 ml-2">
-                <FaGreaterThan />
-              </span>
-            </button> */}
           </div>
           <div className="w-full sm:w-1/2 mt-8 sm:mt-0 p-4">
             {accounts.map((item, index) => {
@@ -185,6 +240,9 @@ const Signup = () => {
                 {formik.errors.firstName ? (
                   <div style={{ color: "red" }}>{formik.errors.firstName}</div>
                 ) : null}
+
+                {/*  */}
+
                 <div className="form-group">
                   <label
                     className="block text-sm font-medium mb-2"
@@ -203,6 +261,8 @@ const Signup = () => {
                     className="form-input w-full border rounded-lg p-2"
                   />
                 </div>
+
+                {/*  */}
 
                 <div className="form-group">
                   <label
@@ -225,20 +285,37 @@ const Signup = () => {
                 {formik.errors.lastName ? (
                   <div style={{ color: "red" }}>{formik.errors.lastName}</div>
                 ) : null}
+
+                {/*  */}
+
+                <select
+                  name="gender"
+                  value={formik.values.gender}
+                  onChange={formik.handleChange}
+                  required
+                >
+                  <option value="" disabled>
+                    Gender
+                  </option>
+                  <option value="savings">male</option>
+                  <option value="current">female</option>
+                </select>
+                {/*  */}
+
                 <div className="form-group">
                   <label
                     className="block text-sm font-medium mb-2"
-                    htmlFor="dob"
+                    htmlFor="dateOfBirth"
                   >
                     Date of Birth
                   </label>
                   <input
-                    type="text"
-                    id="dob"
-                    name="dob"
+                    type="string"
+                    id="dateOfBirth"
+                    name="dateOfBirth"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.dob}
+                    value={formik.values.dateOfBirth}
                     placeholder="MM/DD/YYYY"
                     className="form-input w-full border rounded-lg p-2"
                   />
@@ -264,10 +341,184 @@ const Signup = () => {
                 {formik.errors.email ? (
                   <div style={{ color: "red" }}>{formik.errors.email}</div>
                 ) : null}
+
+                {/*  */}
+
+                <div className="form-group">
+                  <label
+                    className="block text-sm font-medium mb-2"
+                    htmlFor="residentialAddress"
+                  >
+                    residentialAddress
+                  </label>
+                  <input
+                    type="text"
+                    id="residentialAddress"
+                    name="residentialAddress"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.residentialAddress}
+                    placeholder="Enter residential Address"
+                    className="form-input w-full border rounded-lg p-2"
+                  />
+                </div>
+                {formik.errors.residentialAddress ? (
+                  <div style={{ color: "red" }}>
+                    {formik.errors.residentialAddress}
+                  </div>
+                ) : null}
+
+                {/*  */}
+
+                <div className="form-group">
+                  <label
+                    className="block text-sm font-medium mb-2"
+                    htmlFor="city"
+                  >
+                    city
+                  </label>
+                  <input
+                    type="text"
+                    id="city"
+                    name="city"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.city}
+                    placeholder="Enter city"
+                    className="form-input w-full border rounded-lg p-2"
+                  />
+                </div>
+                {formik.errors.city ? (
+                  <div style={{ color: "red" }}>{formik.errors.city}</div>
+                ) : null}
+
+                {/*  */}
+
+                <div className="form-group">
+                  <label
+                    className="block text-sm font-medium mb-2"
+                    htmlFor="state"
+                  >
+                    state
+                  </label>
+                  <input
+                    type="text"
+                    id="state"
+                    name="state"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.state}
+                    placeholder="Enter state"
+                    className="form-input w-full border rounded-lg p-2"
+                  />
+                </div>
+                {formik.errors.state ? (
+                  <div style={{ color: "red" }}>{formik.errors.state}</div>
+                ) : null}
+
+                {/*  */}
+                <div className="form-group">
+                  <label
+                    className="block text-sm font-medium mb-2"
+                    htmlFor="country"
+                  >
+                    Counrty
+                  </label>
+                  <input
+                    type="text"
+                    id="country"
+                    name="country"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.country}
+                    placeholder="Enter Country"
+                    className="form-input w-full border rounded-lg p-2"
+                  />
+                </div>
+
+                {formik.errors.country ? (
+                  <div style={{ color: "red" }}>{formik.errors.country}</div>
+                ) : null}
+
+                {/*  */}
+                <div className="form-group">
+                  <label
+                    className="block text-sm font-medium mb-2"
+                    htmlFor="typeofIdentification"
+                  >
+                    Type Of Identification
+                  </label>
+                  <input
+                    type="text"
+                    id="typeofIdentification"
+                    name="typeofIdentification"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.typeofIdentification}
+                    placeholder="Enter type of Identification"
+                    className="form-input w-full border rounded-lg p-2"
+                  />
+                </div>
+
+                {formik.errors.typeofIdentification ? (
+                  <div style={{ color: "red" }}>
+                    {formik.errors.typeofIdentification}
+                  </div>
+                ) : null}
+
+                {/*  */}
+                <div className="form-group">
+                  <label
+                    className="block text-sm font-medium mb-2"
+                    htmlFor="identificationNumber"
+                  >
+                    Identification Number:
+                  </label>
+                  <input
+                    type="text"
+                    id="identificationNumber"
+                    name="identificationNumber"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.identificationNumber}
+                    placeholder="Enter identification Number: "
+                    className="form-input w-full border rounded-lg p-2"
+                  />
+                </div>
+                {formik.errors.identificationNumber ? (
+                  <div style={{ color: "red" }}>
+                    {formik.errors.identificationNumber}
+                  </div>
+                ) : null}
+
+                {/*  */}
+                <div className="form-group">
+                  <label
+                    className="block text-sm font-medium mb-2"
+                    htmlFor="occupation"
+                  >
+                    Occupation
+                  </label>
+                  <input
+                    type="text"
+                    id="occupation"
+                    name="occupation"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.occupation}
+                    placeholder="Enter occupation: "
+                    className="form-input w-full border rounded-lg p-2"
+                  />
+                </div>
+                {formik.errors.occupation ? (
+                  <div style={{ color: "red" }}>{formik.errors.occupation}</div>
+                ) : null}
+                {/*  */}
+
                 <div className="form-group relative">
                   <label
                     className="block text-sm font-medium mb-2"
-                    htmlFor="primaryPhoneNumber"
+                    htmlFor="phonenumber"
                   >
                     Primary Phone Number
                   </label>
@@ -277,7 +528,7 @@ const Signup = () => {
                     </span>
                     <input
                       type="number"
-                      id="primaryPhoneNumber"
+                      id="phonenumber"
                       name="phonenumber"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -287,6 +538,30 @@ const Signup = () => {
                     />
                   </div>
                 </div>
+                {formik.errors.phonenumber ? (
+                  <div style={{ color: "red" }}>
+                    {formik.errors.phonenumber}
+                  </div>
+                ) : null}
+
+                {/*  */}
+
+                <select
+                  name="accountType"
+                  value={formik.values.accountType}
+                  onChange={formik.handleChange}
+                  required
+                >
+                  <option value="" disabled>
+                    Select Account Type
+                  </option>
+                  <option value="savings">Savings</option>
+                  <option value="current">Current</option>
+                  <option value="business">Business</option>
+                </select>
+
+                {/*  */}
+
                 <div className="form-group">
                   <label
                     className="block text-sm font-bold mb-2"
@@ -304,14 +579,30 @@ const Signup = () => {
                 </div>
                 <div className="form-group">
                   <label
+                    className="block text-sm font-medium mb-2"
+                    htmlFor="file"
+                  >
+                    Upload Your ID Card
+                  </label>
+                  <input
+                    type="file"
+                    id="file"
+                    name="image"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="form-input w-full border rounded-lg p-2"
+                  />
+                </div>
+                <div className="form-group">
+                  <label
                     className="block text-sm font-bold mb-2"
-                    htmlFor="zipCode"
+                    htmlFor="password"
                   >
                     Password
                   </label>
                   <input
                     type="password"
-                    id="123456"
+                    id="password"
                     name="password"
                     placeholder="Set Password"
                     onChange={formik.handleChange}
@@ -326,13 +617,13 @@ const Signup = () => {
                 <div className="form-group">
                   <label
                     className="block text-sm font-bold mb-2"
-                    htmlFor="confirm"
+                    htmlFor="confirmpassword"
                   >
                     Confirm-Password
                   </label>
                   <input
                     type="password"
-                    id="1234567"
+                    id="confirmpassword"
                     name="confirmpassword"
                     placeholder="confirm password"
                     onChange={formik.handleChange}
