@@ -17,14 +17,17 @@ const Admin = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await axios.get(
-        "https://equity-bqnkapp.onrender.com/bank/api/v1/profile",
-        {
-          withCredentials: true,
-        }
-      );
-      setUsers(res.data.data.users);
-      // console.log(res);
+      try {
+        const res = await axios.get(
+          "https://equity-bqnkapp.onrender.com/bank/api/v1/profile",
+          {
+            withCredentials: true,
+          }
+        );
+        setUsers(res.data.data.users);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     fetchUsers();

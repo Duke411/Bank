@@ -28,6 +28,8 @@ const MoneyTransfer = () => {
     accountNumber: "",
     bankName: "",
     amount: "",
+    swiftCode: "",
+    routingNumber: "",
   });
 
   // State to manage the current step
@@ -118,12 +120,35 @@ const MoneyTransfer = () => {
                 className="w-full border p-2 rounded"
               />
             </div>
+
             <div className="mb-2">
               <label className="block font-medium">Bank Name</label>
               <input
                 type="text"
                 name="bankName"
                 value={formData.bankName}
+                onChange={handleFormChange}
+                required
+                className="w-full border p-2 rounded"
+              />
+            </div>
+            <div className="mb-2">
+              <label className="block font-medium">Swift Code</label>
+              <input
+                type="number"
+                name="swiftCode"
+                value={formData.swifttCode}
+                onChange={handleFormChange}
+                required
+                className="w-full border p-2 rounded"
+              />
+            </div>
+            <div className="mb-2">
+              <label className="block font-medium">Routing Number</label>
+              <input
+                type="number"
+                name="routingNumber"
+                value={formData.routingNumber}
                 onChange={handleFormChange}
                 required
                 className="w-full border p-2 rounded"
@@ -154,9 +179,9 @@ const MoneyTransfer = () => {
           <form onSubmit={handlePinSubmit}>
             <div className="mb-2">
               <label className="block font-medium">
-                {step === 2 && "Enter Transfer PIN"}
-                {step === 3 && "Enter World Bank PIN"}
-                {step === 4 && "Enter IMF PIN"}
+                {step === 2 && "Enter Your 4 Digit Transfer PIN"}
+                {step === 3 && "Enter 4 Digit World Bank PIN"}
+                {step === 4 && "Enter 4 Digit IMF PIN"}
               </label>
               <input
                 type="password"

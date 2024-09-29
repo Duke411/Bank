@@ -1,10 +1,12 @@
 import "../../App.css";
 import { Link } from "react-router-dom";
-import { FaBell, FaUser, FaHome, FaCcMastercard } from "react-icons/fa";
+import { FaBell, FaUser, FaHome } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 import { IoLogOutOutline } from "react-icons/io5";
 import { MdAccountBalanceWallet } from "react-icons/md";
-import { GrTransaction } from "react-icons/gr";
+// import { GrTransaction } from "react-icons/gr";
+import { GiCash } from "react-icons/gi";
+
 import { FaMessage } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useContext } from "react";
@@ -51,6 +53,12 @@ const Payments = () => {
 
             <Link className="flex hover:bg-yellow-600 hover:text-black p-2 active">
               <FaHome /> <span className="ml-3">Payments</span>
+            </Link>
+            <Link
+              className="flex hover:bg-yellow-600 hover:text-black p-2"
+              to="/adminloan"
+            >
+              <GiCash /> <span className="ml-3">Apply For Loan</span>
             </Link>
             {/* <Link
               to="/cards"
@@ -115,6 +123,12 @@ const Payments = () => {
                   to="/payments"
                 >
                   <FaHome /> <span className="ml-3">Payments</span>
+                </Link>
+                <Link
+                  className="flex hover:bg-yellow-600 hover:text-black p-2"
+                  to="/adminloan"
+                >
+                  <GiCash /> <span className="ml-3">Apply For Loan</span>
                 </Link>
                 <Link
                   className="flex hover:bg-yellow-600 hover:text-black p-2"

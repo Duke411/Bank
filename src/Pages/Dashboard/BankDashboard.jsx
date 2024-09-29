@@ -5,6 +5,7 @@ import { IoIosSettings } from "react-icons/io";
 import { IoLogOutOutline } from "react-icons/io5";
 import { MdAccountBalanceWallet } from "react-icons/md";
 // import { GrTransaction } from "react-icons/gr";
+import { GiCash } from "react-icons/gi";
 import { FaMessage } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { FaSackDollar } from "react-icons/fa6";
@@ -47,10 +48,21 @@ const BankDashboard = () => {
         localStorage.setItem("userData", JSON.stringify(data.user));
 
         const templateParams = {
+          to_name: `${data.user.firstName}`,
           to_email: `${data.user.email}`,
           from_name: "Equity Bank",
-          message:
-            "Your account has been successfully credited. If you have any questions or need further assistance, please don't hesitate to contact us. Thank you for choosing our bank!.",
+          message: `Your account has been successfully credited with ${newBalance}. 
+             
+          Details:
+
+          Date: ${Date.now()}
+          Transaction Type: Credit
+          Amount:${newBalance}
+          Account Number: ${user.bankAccountNumber}
+          Available Balance: ${newBalance}
+  
+          If you have any questions or need further assistance, 
+          please don't hesitate to contact us. Thank you for choosing Equity bank!.`,
         };
 
         emailjs
@@ -161,12 +173,12 @@ const BankDashboard = () => {
             >
               <FaHome /> <span className="ml-3">Payments</span>
             </Link>
-            {/* <Link
+            <Link
               className="flex hover:bg-yellow-600 hover:text-black p-2"
-              to="/cards"
+              to="/adminloan"
             >
-              <FaCcMastercard /> <span className="ml-3">Cards</span>
-            </Link> */}
+              <GiCash /> <span className="ml-3">Apply For Loan</span>
+            </Link>
 
             <Link
               className="flex hover:bg-yellow-600 hover:text-black p-2"
@@ -225,6 +237,12 @@ const BankDashboard = () => {
                   to="/payments"
                 >
                   <FaHome /> <span className="ml-3">Payments</span>
+                </Link>
+                <Link
+                  className="flex hover:bg-yellow-600 hover:text-black p-2"
+                  to="/adminloan"
+                >
+                  <GiCash /> <span className="ml-3">Apply For Loan</span>
                 </Link>
                 <Link
                   className="flex hover:bg-yellow-600 hover:text-black p-2"

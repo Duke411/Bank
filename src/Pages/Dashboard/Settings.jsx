@@ -4,7 +4,8 @@ import { FaBell, FaUser, FaHome } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 import { IoLogOutOutline } from "react-icons/io5";
 import { MdAccountBalanceWallet } from "react-icons/md";
-import { GrTransaction } from "react-icons/gr";
+// import { GrTransaction } from "react-icons/gr";
+import { GiCash } from "react-icons/gi";
 import { FaMessage } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 import axios from "axios";
@@ -80,19 +81,25 @@ const Settings = () => {
             <MdAccountBalanceWallet />
             <span className="ml-2">Products</span>
           </Link>
-          <Link
+          {/* <Link
             className="flex hover:bg-yellow-600 hover:text-black p-2"
             to="/transactions"
           >
             <GrTransaction />
             <span className="ml-2">Transactions</span>
-          </Link>
+          </Link> */}
           <Link
             className="flex hover:bg-yellow-600 hover:text-black p-2"
             to="/payments"
           >
             <FaHome />
             <span className="ml-2">Payments</span>
+          </Link>
+          <Link
+            className="flex hover:bg-yellow-600 hover:text-black p-2"
+            to="/adminloan"
+          >
+            <GiCash /> <span className="ml-3">Apply For Loan</span>
           </Link>
           <Link className="flex hover:bg-yellow-600 hover:text-black p-2 active">
             <IoIosSettings />
@@ -149,6 +156,12 @@ const Settings = () => {
                 to="/payments"
               >
                 <FaHome /> <span className="ml-3">Payments</span>
+              </Link>
+              <Link
+                className="flex hover:bg-yellow-600 hover:text-black p-2"
+                to="/adminloan"
+              >
+                <GiCash /> <span className="ml-3">Apply For Loan</span>
               </Link>
               <Link
                 className="flex hover:bg-yellow-600 hover:text-black p-2"

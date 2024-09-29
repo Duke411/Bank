@@ -7,6 +7,8 @@ import { MdAccountBalanceWallet } from "react-icons/md";
 import { GrTransaction } from "react-icons/gr";
 import { FaMessage } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { GiCash } from "react-icons/gi";
+
 import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import { useState } from "react";
@@ -39,18 +41,24 @@ const Accounts = () => {
             <li className="flex hover:bg-yellow-600 hover:text-black p-2 active">
               <MdAccountBalanceWallet /> <span className="ml-3">Products</span>
             </li>
-            <Link
+            {/* <Link
               className="flex hover:bg-yellow-600 hover:text-black p-2"
               to="/transactions"
             >
               <GrTransaction /> <span className="ml-3">Transactions</span>
-            </Link>
+            </Link> */}
 
             <Link
               to="/payments"
               className="flex hover:bg-yellow-600 hover:text-black p-2"
             >
               <FaHome /> <span className="ml-3">Payments</span>
+            </Link>
+            <Link
+              className="flex hover:bg-yellow-600 hover:text-black p-2"
+              to="/adminloan"
+            >
+              <GiCash /> <span className="ml-3">Apply For Loan</span>
             </Link>
             {/* <Link
               to="/cards"
@@ -113,6 +121,12 @@ const Accounts = () => {
                   className="flex hover:bg-yellow-600 hover:text-black p-2"
                 >
                   <FaHome /> <span className="ml-3">Payments</span>
+                </Link>
+                <Link
+                  className="flex hover:bg-yellow-600 hover:text-black p-2"
+                  to="/adminloan"
+                >
+                  <GiCash /> <span className="ml-3">Apply For Loan</span>
                 </Link>
                 <Link
                   to="/settings"
